@@ -135,7 +135,7 @@ NS_ASSUME_NONNULL_BEGIN
     {
         targetURL = [NSURL URLWithString:uri];
     }
-    else if ([uri hasPrefix: @"/var/"])
+    else if ([uri hasPrefix: @"/var/"] || [uri hasPrefix: @"/private/var/"])
     {
         targetURL = [NSURL URLWithString:[NSString stringWithFormat:@"file://%@", uri]];
     }
