@@ -1,10 +1,10 @@
-# cordova-plugin-wkwebview-file-xhr 2.1.1
+# cordova-plugin-wkwebview-file-xhr 3.0.0
 
 ## About the cordova-plugin-wkwebview-file-xhr
 
 This plugin makes it possible to reap the performance benefits of using the WKWebView in your Cordova app by resolving the following issues:
 
-* The default behavior of WKWebView is to raise a cross origin exception when loading files from the main bundle using the file protocol - "file://".  This plugin works around this shortcoming by loading files via native code if the web view's current location has "file" protocol and the target URL passed to the open method of the XMLHttpRequest is relative. As a security measure, the plugin verifies that the standardized path of the target URL is within the "www" folder of the application's main bundle.
+* The default behavior of WKWebView is to raise a cross origin exception when loading files from the main bundle using the file protocol - "file://".  This plugin works around this shortcoming by loading files via native code if the web view's current location has "file" protocol and the target URL passed to the open method of the XMLHttpRequest is relative. As a security measure, the plugin verifies that the standardized path of the target URL is within the "www" folder of the application's main bundle or in the /Library path of the application data directory.
 
 * Since the application's starting page is loaded from the device's file system, all XHR requests to remote endpoints are considered cross origin.  For such requests, WKWebView specifies "null" as the value of the Origin header, which will be rejected by endpoints that are configured to disallow requests from the null origin. This plugin works around that issue by handling all remote requests at the native layer where the origin header will be excluded.
 
@@ -15,6 +15,12 @@ Plugin installation requires Cordova 4+ and iOS 9+. It will install the Apache C
 ```
 cordova plugin add cordova-plugin-wkwebview-file-xhr
 ```
+
+Note : If your cordova-ios version is less than 6.0.0. You need to add following dependency to plugin.xml
+```
+<dependency id="cordova-plugin-wkwebview-engine" />
+```
+Alternatively you can use this plugin's version 2.1.4
 
 ## Supported Platforms
 
@@ -28,7 +34,7 @@ var xhr = new XMLHttpRequest();
 xhr.addEventListener("loadend", function(evt)
  {
    var data = this.responseText;
-   document.getElementById("myregion").innerHtml = data;
+   document.getElementById("myregion").innerHTML = data;
  });
 
 xhr.open("GET", "js/views/customers.html");
